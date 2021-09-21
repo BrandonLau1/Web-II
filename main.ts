@@ -386,6 +386,7 @@ imprimir2({
 });
 
 //object types readonly properties
+/*
 interface Perro {
     readonly raza: string;
 }
@@ -405,7 +406,7 @@ interface EdadNoEscribible {
 const Luisa: Personas = { edad: 20 };
 const Pedro: EdadNoEscribible = Luisa;
 
-Luisa.edad++;
+Luisa.edad++;*/
 
 //object types extender tipos
 interface Direccion {
@@ -554,5 +555,205 @@ const a: StringNumberBooleans = ["a", 1, true, false, true];
 type Autoz = readonly [string, number];
 
 const priuz: Autoz = ["Toyota", 2014];
-// probando los cambios
 
+//clases constructors
+class Punto3{
+    constructor(x: number, y:number);
+    constructor(s: string);
+    constructor(xs: number | string, y?: number){
+
+    }
+}
+//class super
+class Figuras{
+    lados = 0;
+}
+
+class Ciruclo extends Figuras {
+    constructor(){
+        super();
+        this.lados = 2;
+    }
+}
+//classes methods
+class Video {
+    titulo: string;
+
+    constructor(titulo: string){
+        this.titulo = titulo;
+    }
+
+    reproducir(): void {
+        console.log(`${this.titulo} se esta reporduciendo`);
+    }
+}
+
+const miVideo = new Video("año nuevo");
+miVideo.reproducir();
+
+//clases setter y getters
+class Desfile {
+    private _participantes =0;
+
+    get partipantes(): number {
+        return this._participantes;
+    }
+
+    set participantes(v: number) {
+        this._participantes = v;
+    }
+}
+
+const desfileHoy = new Desfile();
+desfileHoy.participantes = 100;
+console.log(desfileHoy.participantes);
+//clases herencia
+interface Encendible {
+    encender(): void;
+}
+class Television implements Encendible {
+    encender(): void {
+        console.log("El televisor se ha encendido");
+    }
+}
+//clases extends
+class Animal{
+    moverse(){
+        console.log("El animal se mueve");
+    }
+}
+
+class Perro extends Animal {
+    ladrar(){
+        console.log("El perro ladra");
+    }
+}
+
+const miPerro = new Perro();
+miPerro.moverse();
+miPerro.ladrar();
+
+//class sobrecarga
+class Padre {
+    saludar(){
+        console.log("hola");
+    }
+}
+class Hijo extends Padre {
+    saludar(nombre?: string){
+        if(!!nombre){
+            console.log(`Hola ${nombre}`);
+        }else{
+            super.saludar();
+        }
+    }
+}
+const hijo = new Hijo();
+hijo.saludar();
+hijo.saludar("Luis");
+
+//class orden de inicializacion de las clases
+class Definicion {
+    nombre = "definicion";
+    constructor() {
+        console.log(`Mi nombre es ${this.nombre}`);
+    }
+}
+
+class Implementacion extends Definicion {}
+const d = new Implementacion();
+
+//visibilidad publica
+class Saludo {
+    public saludar(){
+        console.log("Saludar!");
+    }
+}
+
+const inst = new Saludo();
+inst.saludar();
+
+//clases visibility protected
+class Saludo1 {
+    protected getDestinatario(){
+        return "amigos";
+    }
+}
+class SaludoEspecial extends Saludo1 {
+    saludar() {
+        console.log(`Hola ${this.getDestinatario()}`);
+    }
+}
+
+const saludo: SaludoEspecial = new SaludoEspecial();
+saludo.saludar();
+
+//metodos protegidos
+class Base{
+    protected m = 10;
+}
+
+class Derivada extends Base {
+    m = 15;
+}
+
+const r = new Derivada();
+console.log(r.m);
+
+//cross hierrarchy protected access
+/*class Base1 {
+    protected x: number = 1;
+}
+
+class Derivada1 extends Base1{
+    protected x: number = 5;
+}
+
+class Derivada2 extends Base {
+    imprimirX(c1: Derivada2){
+        console.log(c1.x);
+    }
+}*/
+//clases generics
+class Caja2<T> {
+    contenido: T;
+
+    constructor(value: T){
+        this.contenido = value;
+        console.log(this.contenido);
+    }
+}
+
+type Juguete = {
+    nombre: string;
+};
+
+const misJuguetes: Juguete[] = [];
+misJuguetes.push({nombre: "Pelota"});
+misJuguetes.push({nombre: "Consola"});
+
+const miCajaDeJuguetes: Caja2<Juguete[]> = new Caja2(misJuguetes);
+type Maquillaje = {
+    nombre: string;
+};
+
+const miMaquillaje: Maquillaje[] = [];
+miMaquillaje.push({nombre: "sombras"});
+miMaquillaje.push({nombre: "labial"});
+
+const miCajaDeMaquillaje: Caja2<Maquillaje[]> = new Caja2(miMaquillaje);
+
+//clases this types
+class Caja3 {
+    contenido = "";
+    set (valor: string){
+        this.contenido = valor;
+        return this;
+    }
+}
+const miCaja: Caja3 = new Caja3();
+const valorRetornado = miCaja.set("Joyas");
+console.log(miCaja);
+console.log(valorRetornado);
+
+//
